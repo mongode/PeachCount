@@ -1,5 +1,8 @@
 package com.ixw;
 
+/**
+ * 仅用于测试，不参与PeachCount；
+ */
 public class RunnaleDemo implements Runnable {
     
     private Thread thread;
