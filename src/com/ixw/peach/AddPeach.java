@@ -1,49 +1,40 @@
-package com.ixw;
+package com.ixw.peach;
 
-public class EatPeach implements Runnable {
+public class AddPeach implements Runnable {
     
     private Thread thread;
     private String threadName;
-    private PeachNum peachNum;
-    private Integer eatNum;
+    private Integer addNum;
     private Long sleepTime;
     private Integer currentNum;
     
-    public EatPeach(String threadName, PeachNum peachNum, Integer eatNum, Long sleepTime) {
+    public AddPeach(String threadName, Integer addNum, Long sleepTime) {
         this.threadName = threadName;
-        this.peachNum = peachNum;
-        this.eatNum = eatNum;
+        this.addNum = addNum;
         this.sleepTime = sleepTime;
         System.out.println("Creating " + threadName);
     }
     
     @Override
-    public synchronized String toString() {
-        return "EatPeach{" +
+    public String toString() {
+        return "AddPeach{" +
                 "thread=" + thread +
                 ", threadName='" + threadName + '\'' +
-                ", peachNum_operCount=" + peachNum.getOperCount() +
-                ", eatNum=" + eatNum +
+                ", peachNum_operCount=" + PeachNum.getOperCount() +
+                ", addNum=" + addNum +
                 ", sleepTime=" + sleepTime +
                 ", currentNum=" + currentNum +
                 '}';
     }
     
     @Override
-    public void run() {
+    public synchronized void run() {
         System.out.println("Running " + threadName);
-        while (peachNum.getRunTag()) {
-            currentNum = peachNum.getPn() - eatNum;
-            if (currentNum <= 0) {
-                peachNum.setRunTag(false);
-                this.eatNum = peachNum.getPn();
-                peachNum.setPn(0);
-                break;
-            }
-            peachNum.setPn(currentNum);
-            peachNum.setOperCount(peachNum.getOperCount()+1);
+        while (PeachNum.getRunTag()) {
+            currentNum = PeachNum.getPn() + addNum;
+            PeachNum.setPn(currentNum);
+            PeachNum.setOperCount(PeachNum.getOperCount()+1);
             System.out.println(this.toString());
-            
             try {
                 Thread.sleep(sleepTime);
             } catch (InterruptedException e) {

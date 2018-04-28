@@ -1,4 +1,4 @@
-package com.ixw;
+package com.ixw.demo;
 
 /**
  * 仅用于测试，不参与PeachCount；
